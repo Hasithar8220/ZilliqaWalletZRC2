@@ -109,7 +109,7 @@ app.post('/sendTransaction', function (req, res) {
   let amount = req.body.amount.trim();
   let wData = new walletData();
 
-  wData.transaction(req.session.address,toAddr, amount, req).then((data) => {
+  wData.transaction(toAddr, amount).then((data) => {
     if (data == 0) {
       res.render('failure');
     } else {
@@ -148,10 +148,8 @@ app.listen(3000, function () {
 const authHandler = function (address, res, req) {
   let wData = new walletData();
   let viewData = {};
-
   address = address.toLowerCase();
 
-  //wData.getSmartContractState().then(
   wData.getContract().then(
 
     (data) => {
@@ -159,14 +157,17 @@ const authHandler = function (address, res, req) {
       console.log(data);
       let info = data.result;
       let symbol = info[3];
-      viewData.symbol=symbol.value;
+      
       wData.getSmartContractState().then(
         (data) => {
 
-          // console.log(data.result.balances_map);
+         //Check if user is part of the contract
           if(address in data.result.balances_map) {
             console.log(data.result.balances_map[address]);
+            viewData.symbol=symbol.value;
             viewData.balance=data.result.balances_map[address];
+          }else{
+            viewData.balance='Logged in user is not a valid token owner for the contract.';
           }
 
           res.render('index', {

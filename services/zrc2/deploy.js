@@ -2,16 +2,18 @@ const fs = require('fs');
 const {Long, bytes, units} = require('@zilliqa-js/util');
 const {Zilliqa} = require('@zilliqa-js/zilliqa');
 const {getAddressFromPrivateKey} = require('@zilliqa-js/crypto');
-
 const zilliqa = new Zilliqa('https://dev-api.zilliqa.com');
+const config = require('../../config.json');
 
 
 async function main() {
     const CHAIN_ID = 333;
     const MSG_VERSION = 1;
     const VERSION = bytes.pack(CHAIN_ID, MSG_VERSION);
-    //privkey = '07e0b1d1870a0ba1b60311323cb9c198d6f6193b2219381c189afab3f5ac41a9';
-    privkey='3de3a69c4b38ecb9a9d308924f7654251a7dc2c1faf79706f9894c069153249d';
+    privkey=config.contractOwnerPK;
+
+    console.log(privkey);
+
     zilliqa.wallet.addByPrivateKey(
         privkey
     );
@@ -39,12 +41,12 @@ async function main() {
         {
             vname: "name",
             type: "String",
-            value: `HASI`
+            value: `DS`
         },
         {
             vname: "symbol",
             type: "String",
-            value: `HASI`
+            value: `DS`
         },
         {
             vname: "decimals",
