@@ -1,4 +1,12 @@
 {
-    "contractAddress" : "de1c34d86e7c0c609302f94dc5275d8e4fb3f0ac",
-    "contractOwnerPK" : "20a403dbbd33bbec8350bf7ad456d0d60e95d9cb6ef7ac741c60b4fb21b4c718"
+    "contractAddress" : "685574a885c2913ed47aff4c8ec2c068973fc8e3",
+    "contractOwnerPK" : "20a403dbbd33bbec8350bf7ad456d0d60e95d9cb6ef7ac741c60b4fb21b4c718",
+     "chainId" : 333, 
+     "msgVersion" : 1,
+     "Label":"hasitha",
+     "key": "e03b2c95515bb71580ca8df3c09c8468530e64ce6efb9022bf01cbf9e2d3881b",
+     "secret" :"a364f8d1bea7afe129980a991c744ce790905422eb992bd7892a41032a4a6901"
 }
+
+
+

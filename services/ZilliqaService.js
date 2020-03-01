@@ -14,15 +14,13 @@ var localStorage = require('node-localstorage').LocalStorage,
 // You can manually pack the bytes according to chain id and msg version.
 // For more information: https://apidocs.zilliqa.com/?shell#getnetworkid
 
-const chainId = 333; // chainId of the developer testnet
-const msgVersion = 1; // current msgVersion
+const chainId = config.chainId; // chainId of the developer testnet
+const msgVersion = config.msgVersion; // current msgVersion
 const VERSION = bytes.pack(chainId, msgVersion);
-const myGasPrice = units.toQa('1000', units.Units.Li); // Gas Price that will be used by all transactions
-
-
 // Load contract address from config
 const contractaddress = config.contractAddress;
-
+const myGasPrice = units.toQa('1000', units.Units.Li); // Gas Price that will be used by all transactions
+    
 
 ///Class to return wrapper methods for Zilliqa API
 class walletData {
@@ -47,13 +45,20 @@ class walletData {
 
   async transaction(toAddr, amount) {
 
-    const ftAddr = toBech32Address(contractaddress);
-    
     console.log(toAddr);
     console.log(amount);
 
+    const minGasPrice = await zilliqa.blockchain.getMinimumGasPrice();
+    const isGasSufficient = myGasPrice.gte(new BN(minGasPrice.result)); // Checks if your gas price is less than the minimum gas price
+
+    console.log(`Is the gas price sufficient? ${isGasSufficient}`);
+
+    if(!isGasSufficient) return 0;
+
+    const ftAddr = toBech32Address(contractaddress);
+    const contract = zilliqa.contracts.at(ftAddr);
     try {
-      const contract = zilliqa.contracts.at(ftAddr);
+      
       const callTx = await contract.call(
         'Transfer',
         [
@@ -72,7 +77,7 @@ class walletData {
           version: VERSION,
           amount: new BN(0),
           gasPrice: myGasPrice,
-          gasLimit: Long.fromNumber(10000),
+          gasLimit: Long.fromNumber(100000),
         },
         33,
         100,
@@ -175,7 +180,16 @@ async isAuthorizedOperator(operatorAddress) {
 
 
   ///Get Transactions Hostory
-  getRecentTransactions() {
+  async getRecentTransactions() {
+
+    //{value: "zil1dp2hf2y9c2gna4r6laxgaskqdztnlj8rlqtluy", network: "testnet"}
+
+    
+    const init = await zilliqa.blockchain.getTransactionsForTxBlock()
+
+    const ftAddr = toBech32Address(contractaddress);
+    const contract = zilliqa.contracts.at(ftAddr);
+    return await contract.getRecentTransactions();
 
   }
 

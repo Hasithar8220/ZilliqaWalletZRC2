@@ -3,6 +3,7 @@ const upload = require("express-fileupload");
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const config = require('./config.json');
 
 //Calling walletData service 
 const walletData = require('./services/ZilliqaService.js');
@@ -125,13 +126,29 @@ app.post('/sendTransaction', function (req, res) {
 
 
 app.post('/loadHistory', function (req, res) {
+//https://api.viewblock.io/search
 
-  let wData = new walletData();
-  let arr = wData.getRecentTransactions();
+const request = require('request');
 
-  res.render('viewHistory', {
-    data: arr
+let url='https://api.viewblock.io/v1/zilliqa/addresses/'+req.session.address+'/txs?network=testnet';
+console.log(url);
+request({
+  method: 'GET',
+  url: url,
+  headers: {
+    'X-APIKEY': config.key
+  }}, function (error, response, body) {
+  console.log('Status:', response.statusCode);
+  console.log('Headers:', JSON.stringify(response.headers));
+  console.log('Response:', JSON.stringify(body));
+
+  res.render('viewhistory', {
+    data: JSON.parse(body),
+    error: null
   });
+});
+
+
 });
 
 
@@ -161,6 +178,7 @@ const authHandler = function (address, res, req) {
       wData.getSmartContractState().then(
         (data) => {
 
+          console.log(data);
          //Check if user is part of the contract
           if(address in data.result.balances_map) {
             console.log(data.result.balances_map[address]);

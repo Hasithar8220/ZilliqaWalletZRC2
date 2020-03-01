@@ -13,7 +13,7 @@ const {
 
   //const toAddr='0xc3D900b37f0B72667B55a82acaD457eC54C6B2fd';
   const toAddr='0x09E5a1D215A9ec8eBf31828e5264D9d1cA879b11';
-  const amount='5000000';
+  const amount='50000';
 
   //"200000000",
 

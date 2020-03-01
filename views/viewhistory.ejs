@@ -41,11 +41,11 @@
 
  <ul class="timeline">
     <% if(data !== null){
-      for (var i = 0; i < data.length; i++) { %>
+      for (var i = 0; i < 15; i++) { %>
     <li class="timeline-yellow">
         <div class="timeline-time">
-            <span class="date" style="text-align:left">
-            <%= data[i].toAddr %>
+          
+            <%= data[i].hash %> &nbsp;&nbsp; From: <%= data[i].from %> &nbsp;&nbsp; To: <%= data[i].to %>
            
         </div>
     </li>
