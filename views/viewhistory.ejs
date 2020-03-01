@@ -39,18 +39,35 @@
 
  <br>
 
- <ul class="timeline">
+<table>
+    <tr>
+        <th>TxId</th>
+        <th>From</th>
+        <th>To</th>
+      </tr>
     <% if(data !== null){
       for (var i = 0; i < 15; i++) { %>
-    <li class="timeline-yellow">
-        <div class="timeline-time">
-          
-            <%= data[i].hash %> &nbsp;&nbsp; From: <%= data[i].from %> &nbsp;&nbsp; To: <%= data[i].to %>
+        <tr>
+    <td >
+       
+            <%= data[i].hash %>  
            
-        </div>
-    </li>
+      
+      </td>
+      <td >
+       
+          <%= data[i].from %>  
+         
+    
+    </td>
+    <td >
+       
+        <%= data[i].to %>  
+       
+  
+  </td>  </tr>
     <% }} %>
-</ul>
+  </table>
 
  
 

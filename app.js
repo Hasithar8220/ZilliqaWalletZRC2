@@ -49,10 +49,23 @@ app.get('/auth', function (req, res) {
 
 app.get('/viewhistory', function (req, res) {
 
-  res.render('viewhistory', {
-    data: null
-  });
+  const request = require('request');
 
+  let url='https://api.viewblock.io/v1/zilliqa/addresses/'+req.session.address+'/txs?network=testnet';
+  console.log(url);
+  request({
+    method: 'GET',
+    url: url,
+    headers: {
+      'X-APIKEY': config.key
+    }}, function (error, response, body) {
+   
+  
+    res.render('viewhistory', {
+      data: JSON.parse(body),
+      error: null
+    });
+});
 });
 
 app.get('/success', function (req, res) {
@@ -138,9 +151,7 @@ request({
   headers: {
     'X-APIKEY': config.key
   }}, function (error, response, body) {
-  console.log('Status:', response.statusCode);
-  console.log('Headers:', JSON.stringify(response.headers));
-  console.log('Response:', JSON.stringify(body));
+ 
 
   res.render('viewhistory', {
     data: JSON.parse(body),
