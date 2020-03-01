@@ -47,6 +47,7 @@ class walletData {
 
     console.log(toAddr);
     console.log(amount);
+    console.log(myGasPrice);
 
     const minGasPrice = await zilliqa.blockchain.getMinimumGasPrice();
     const isGasSufficient = myGasPrice.gte(new BN(minGasPrice.result)); // Checks if your gas price is less than the minimum gas price
@@ -77,9 +78,9 @@ class walletData {
           version: VERSION,
           amount: new BN(0),
           gasPrice: myGasPrice,
-          gasLimit: Long.fromNumber(100000),
+          gasLimit: Long.fromNumber(10000),
         },
-        33,
+        50,
         100,
         false,
       );
@@ -176,33 +177,14 @@ async isAuthorizedOperator(operatorAddress) {
 
   }
 
-
-
-
-  ///Get Transactions Hostory
-  async getRecentTransactions() {
-
-    //{value: "zil1dp2hf2y9c2gna4r6laxgaskqdztnlj8rlqtluy", network: "testnet"}
-
-    
-    const init = await zilliqa.blockchain.getTransactionsForTxBlock()
-
-    const ftAddr = toBech32Address(contractaddress);
-    const contract = zilliqa.contracts.at(ftAddr);
-    return await contract.getRecentTransactions();
-
-  }
-
   async addKeystoreFile(json, passphrase) {
 
     const address = await zilliqa.wallet.addByKeystore(json, passphrase).catch((err) => {
       return 0;
     });
-
+    console.log(`PW: ${passphrase}`);
     console.log(`My account address is: ${address}`);
-    // console.log(`My account bech32 address is: ${toBech32Address(address)}`);
-    localStorage.setItem('txids', '');
-
+   
     return address;
   }
 

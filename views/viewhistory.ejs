@@ -42,27 +42,36 @@ th, td {
 
     <div class="container">
 
-        <form  enctype="multipart/form-data" action="/loadHistory" method="post">
-        
-          <input type="submit" name="submit" id="btnSubmit" value="Refresh" /> </form>
-
+       
  <br>
 
 <table>
     <tr>
         <th>TxId</th>
+        <th>Type</th>
         <th>From</th>
         <th>To</th>
       </tr>
     <% if(data !== null){
-      for (var i = 0; i < 15; i++) { %>
+      for (var i = 0; i < data.length; i++) { %>
         <tr>
+          
     <td >
        
             <%= data[i].hash %>  
            
       
       </td>
+
+      <td >
+       
+          <%  if(address == data[i].from){ %>
+         Sent
+
+         <% } %>
+    
+    </td>
+
       <td >
        
           <%= data[i].from %>  

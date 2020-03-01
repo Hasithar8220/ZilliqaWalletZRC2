@@ -64,7 +64,7 @@ app.get('/viewhistory', function (req, res) {
     res.render('viewhistory', {
       data: JSON.parse(body),
       error: null
-    });
+    ,address: req.session.address});
 });
 });
 
@@ -124,6 +124,7 @@ app.post('/sendTransaction', function (req, res) {
   let wData = new walletData();
 
   wData.transaction(toAddr, amount).then((data) => {
+    //wData.transactionFrom(req.session.address,toAddr, amount).then((data) => {
     if (data == 0) {
       res.render('failure');
     } else {

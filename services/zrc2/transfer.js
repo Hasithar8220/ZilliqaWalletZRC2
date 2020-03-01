@@ -9,11 +9,11 @@ const {
 //   'f2aea17a2009e18fe5933f5cfd8f3d366ea566ef';
 
   const contractaddress =
-  'de1c34d86e7c0c609302f94dc5275d8e4fb3f0ac';
+  '685574a885c2913ed47aff4c8ec2c068973fc8e3';
 
   //const toAddr='0xc3D900b37f0B72667B55a82acaD457eC54C6B2fd';
-  const toAddr='0x09E5a1D215A9ec8eBf31828e5264D9d1cA879b11';
-  const amount='50000';
+  const toAddr='0xbce6Fe31cBCB21181ef253448c7c742F37d59aeb';
+  const amount='500000';
 
   //"200000000",
 
